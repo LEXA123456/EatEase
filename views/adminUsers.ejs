@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Users</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #f4a261; /* Песочный цвет */
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4a261; /* Песочный цвет */
+            color: #ffffff;
+            font-weight: bold;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        footer {
+            background-color: #f4a261; /* Песочный цвет */
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .btn {
+            padding: 8px 16px;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 180px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel - Registered Users</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th style="text-align: center;">Role</th>
+                    <th style="text-align: center;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.id %></td>
+                        <td><%= user.username %></td>
+                        <td style="text-align: center;">
+                            <% if (user.priority === 1) { %>
+                                <span style="color: #007bff;">Пользователь</span>
+                            <% } else if (user.priority === 2) { %>
+                                <span style="color: #28a745;">Администратор</span>
+                            <% } else { %>
+                                <span style="color: #dc3545;">Неопределенный</span>
+                            <% } %>
+                        </td>
+                        <td style="text-align: center;">
+                            <% if (user.priority === 1) { %>
+                                <form action="/admin/users/switchPriority/<%= user.id %>" method="POST">
+                                    <button type="submit" class="btn">Сделать Администратором</button>
+                                </form>
+                            <% } else if (user.priority === 2) { %>
+                                <form action="/admin/users/switchPriority/<%= user.id %>" method="POST">
+                                    <button type="submit" class="btn">Сделать Пользователем</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <a href="/admin">Back to Home</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EatEase</title>
+    <style>
+        body {
+            font-family: 'Helvetica', sans-serif;
+            background-color: #f2f2f2;
+            color: #2c3e50;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            height: 35px; /* Изменил высоту для размещения ближе */
+            margin-right: 15px; /* Уменьшил отступ */
+        }
+        .logo-container h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar nav ul li {
+            margin-bottom: 20px;
+        }
+        .sidebar nav ul li a {
+            text-decoration: none;
+            color: #2c3e50;
+            padding: 10px 20px;
+            display: block;
+            background-color: #f4a261;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .sidebar nav ul li a:hover {
+            background-color: #e76f51;
+        }
+        .main {
+            flex: 1;
+            padding: 40px;
+            background-color: #d3d3d3;
+            overflow-y: auto;
+        }
+        .main h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .categories {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        .category, .product {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        .category img, .product img {
+            max-width: 100%;
+            height: auto; /* Адаптивные размеры */
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .product h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .product p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .product .price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product button {
+            padding: 10px 20px;
+            background-color: #f4a261;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .product button:hover {
+            background-color: #e76f51;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="https://s.iimg.su/s/08/th_BPYLpvaQUrRsnaElVcCI0f84Xo81SNeJ3SQ6xCXG.jpg">
+            <h1>EatEase</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/cart">Корзина</a></li>
+                <% if (userPriority === 2) { %>
+                    <li><a href="/admin">Админ-Панель</a></li>
+                <% } %>
+                <li><a href="/login">Авторизация</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <h1>Категории</h1>
+        <div class="categories">
+            <div class="category">
+                <img src="https://s.iimg.su/s/08/th_dR5khUjV1x93viNvUenNXWyg64bS6P88X43mYnG6.png" alt="Десерт">
+                <p>Десерт</p>
+            </div>
+            <div class="category">
+                <img src="https://s.iimg.su/s/08/th_pgL3VU98XtA6zxL8xE6kHULgWjG5jw06eY5mdXql.png" alt="Бургер">
+                <p>Бургер</p>
+            </div>
+            <div class="category">
+                <img src="https://s.iimg.su/s/08/th_DUPsUl5ecE2LlkRtfwL7VdDzZ2B65rCNPlzLksSe.png" alt="Напитки">
+                <p>Напитки</p>
+            </div>
+            <div class="category">
+                <img src="https://s.iimg.su/s/08/th_Ib9QwBVmp7iBszKXcqsVM4CuuymT38r67HZhlS4o.png" alt="Курица">
+                <p>Курица</p>
+            </div>
+            <div class="category">
+                <img src="https://s.iimg.su/s/08/th_Lom1H43vMtyYP8HQq8nKVAg87rGnmWp4Mp3sTtDR.png" alt="Пицца">
+                <p>Пицца</p>
+            </div>
+        </div>
+        <h1>Популярные Товары</h1>
+        <div class="products">
+            <div class="product">
+                <img src="https://s.iimg.su/s/08/th_eGzfm0h6KdhVTRqBERhxZ8OafDmck43E1MAqCBgi.jpg" alt="Продукт 1">
+                <h3>Спагетти</h3>
+                <p class="price">Цена: 850 руб.</p>
+                <form action="/cart" method="post">
+                    <input type="hidden" name="sub_id" value="1">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit"><b>Купить</b></button>
+                </form>
+            </div>
+            <div class="product">
+                <img src="https://s.iimg.su/s/08/th_K1vcbLIpR4FiqvPwCNN1Wp4KkJodFkJisRemTIs2.jpg" alt="Продукт 2">
+                <h3>Утиная ножка конфи</h3>
+                <p class="price">Цена: 750 руб.</p>
+                <form action="/cart" method="post">
+                    <input type="hidden" name="sub_id" value="2">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit"><b>Купить</b></button>
+                </form>
+            </div>
+            <div class="product">
+                <img src="https://s.iimg.su/s/08/th_8UsjkkFRWRgDntKt2YUnsA3FEcwYJg8cQuMqjeyN.jpg" alt="Продукт 3">
+                <h3>Жаренный ягненок</h3>
+                <b class="price">Цена: 1400 руб.</b>
+                <form action="/cart" method="post">
+                    <input type="hidden" name="sub_id" value="3">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit"><b>Купить</b></button>
+                </form>
+            </div>
+        </div>
+        
+        <h1></h1>
+<div class="products">
+    <div class="product">
+        <img src="https://s.iimg.su/s/08/th_miVuuRkyYqWSeizplKHRvGilsOLPQTqEc6MSAyjk.jpg" alt="Чизкейк">
+        <h3>Чизкейк</h3>
+        <b class="price">Цена: 350 руб.</b>
+        <form action="/cart" method="post">
+            <input type="hidden" name="sub_id" value="4">
+            <input type="number" name="quantity" value="1" min="1">
+            <button type="submit"><b>Купить</b></button>
+        </form>
+    </div>
+    
+    <div class="product">
+        <img src="https://s.iimg.su/s/08/th_BsyCRQ3hGuMYSdKMfVdlSuGkR00xu7T60mgHAdvT.jpg" alt="Шеф Бургер">
+        <h3>Шеф Бургер</h3>
+        <b class="price">Цена: 650 руб.</b>
+        <form action="/cart" method="post">
+            <input type="hidden" name="sub_id" value="5">
+            <input type="number" name="quantity" value="1" min="1">
+            <button type="submit"><b>Купить</b></button>
+        </form>
+    </div>
+
+    <div class="product">
+        <img src="https://s.iimg.su/s/08/th_jeytnUIDHGRnynrrzsIDq8Y7AZ9WEUythBY2BiM5.jpg" alt="Пепперони">
+        <h3>Пепперони</h3>
+        <b class="price">Цена: 950 руб.</b>
+        <form action="/cart" method="post">
+            <input type="hidden" name="sub_id" value="6">
+            <input type="number" name="quantity" value="1" min="1">
+            <button type="submit"><b>Купить</b></button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
